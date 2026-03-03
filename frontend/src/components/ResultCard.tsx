@@ -10,7 +10,7 @@ interface Props {
     onClick?: (vcId: number) => void;
 }
 
-const API_BASE = "http://localhost:8000";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000";
 
 const scoreClass = (score: number) => {
     if (score >= 0.7) return "score-high";

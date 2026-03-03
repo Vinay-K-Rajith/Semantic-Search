@@ -15,10 +15,11 @@ declare global {
   }
 }
 
-const API_URL = "https://test.campuscare.cloud/";
-const API_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MjgyNzUxMzQ1IiwidW5pcXVlX25hbWUiOiIxNTQ3NiIsIndlYnNpdGUiOiJodHRwczovL3Rlc3QuY2FtcHVzY2FyZS5jbG91ZCIsImp0aSI6IjRmY2E5N2YxLWE4YmUtNGNiZS04OGNkLWE1ZTM2YTMyNDcwNiIsImV4cCI6MTc3MjU3NTgyNCwiaXNzIjoiaHR0cHM6Ly90ZXN0LmNhbXB1c2NhcmUuY2xvdWQiLCJhdWQiOiJodHRwczovL3Rlc3QuY2FtcHVzY2FyZS5jbG91ZCJ9.CcCq2x55mCaAH2LFaqSty1myHeF_-4E-_fI1nlM5f3k";
-const API_KEY = "0x020000004CC0FB7F14574BF53AFF27821CAD636D4F339E355A5972F2E968ABD2767C09D8FFCD1CF9F309803950F28BE3B6D01C75";
-const ENCRYPTION_KEY = "0x020000000AEB0C1CF81C74B42F0071513563FBE27B2B5758BA88DF2542042862884DC9C33BD36B99D2B1D220FC5E4F4E9980A168";
+const API_URL = import.meta.env.VITE_CIPHER_API_URL;
+const API_TOKEN = import.meta.env.VITE_CIPHER_API_TOKEN;
+const API_KEY = import.meta.env.VITE_CIPHER_API_KEY;
+const CIPHER_SCHOOL_CODE = import.meta.env.VITE_CIPHER_SCHOOL_CODE;
+const CIPHER_THEME = import.meta.env.VITE_CIPHER_THEME;
 
 export function VideoModal({ vcId, onClose, videoEndTime }: VideoModalProps) {
   const [playbackInfo, setPlaybackInfo] = useState<string | null>(null);
@@ -164,7 +165,7 @@ export function VideoModal({ vcId, onClose, videoEndTime }: VideoModalProps) {
       window.vdo.add({
         otp: otp,
         playbackInfo: playbackInfo,
-        theme: "9ae8bbe8dd964ddc9bdb932cca1cb59a",
+        theme: CIPHER_THEME,
         container: embedBoxRef.current,
       });
 
