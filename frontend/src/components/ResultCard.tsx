@@ -7,6 +7,7 @@ import "./ResultCard.css";
 interface Props {
     result: SearchResult;
     rank: number;
+    onClick?: (vcId: number) => void;
 }
 
 const API_BASE = "http://localhost:8000";
@@ -73,7 +74,7 @@ function Thumbnail({ src, alt }: { src: string; alt: string }) {
     );
 }
 
-export function ResultCard({ result, rank }: Props) {
+export function ResultCard({ result, rank, onClick }: Props) {
     const pct = Math.round(result.score * 100);
     const cls = scoreClass(result.score);
     const cardRef = useRef<HTMLDivElement>(null);
@@ -119,6 +120,8 @@ export function ResultCard({ result, rank }: Props) {
         <motion.article
             ref={cardRef}
             className="result-card"
+            onClick={() => onClick && onClick(result.vc_id)}
+            style={{ cursor: onClick ? "pointer" : "default" }}
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{

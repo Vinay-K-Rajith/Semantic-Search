@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import { SearchBar } from "../components/SearchBar";
 import { ResultCard } from "../components/ResultCard";
+import { VideoModal } from "../components/VideoModal";
 import { semanticSearch, healthCheck } from "../api/search";
 import type { SearchResponse } from "../api/search";
 import "./SearchPage.css";
@@ -16,11 +17,18 @@ export function SearchPage() {
     const [errorMsg, setErrorMsg] = useState("");
     const [backendOk, setBackendOk] = useState<boolean | null>(null);
     const [isPlaying, setIsPlaying] = useState(true);
+    const [selectedVcId, setSelectedVcId] = useState<number | null>(null);
+    const [videoEndTime, setVideoEndTime] = useState<number | null>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
 
     // Ping backend health once on mount
     useEffect(() => {
         healthCheck().then(setBackendOk);
+    }, []);
+
+    const handleVideoClick = useCallback((vcId: number) => {
+        setSelectedVcId(vcId);
+        setVideoEndTime(null); // Reset seek position for new video
     }, []);
 
     const handleSearch = useCallback(async (query: string, topK: number) => {
@@ -229,7 +237,12 @@ export function SearchPage() {
                             transition={{ staggerChildren: 0.08, delayChildren: 0.1 }}
                         >
                             {response.results.map((r, i) => (
-                                <ResultCard key={r.vc_id} result={r} rank={i} />
+                                <ResultCard 
+                                    key={r.vc_id} 
+                                    result={r} 
+                                    rank={i}
+                                    onClick={handleVideoClick}
+                                />
                             ))}
                         </motion.div>
                     </motion.div>
@@ -255,6 +268,15 @@ export function SearchPage() {
                     </motion.div>
                 )}
             </section>
+
+            {/* Video Modal */}
+            {selectedVcId !== null && (
+                <VideoModal
+                    vcId={selectedVcId}
+                    onClose={() => setSelectedVcId(null)}
+                    videoEndTime={videoEndTime}
+                />
+            )}
         </main>
     );
 }
