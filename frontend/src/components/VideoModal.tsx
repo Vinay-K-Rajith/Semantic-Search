@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { X } from "lucide-react";
 import "./VideoModal.css";
@@ -18,7 +18,6 @@ declare global {
 const API_URL = import.meta.env.VITE_CIPHER_API_URL;
 const API_TOKEN = import.meta.env.VITE_CIPHER_API_TOKEN;
 const API_KEY = import.meta.env.VITE_CIPHER_API_KEY;
-const CIPHER_SCHOOL_CODE = import.meta.env.VITE_CIPHER_SCHOOL_CODE;
 const CIPHER_THEME = import.meta.env.VITE_CIPHER_THEME;
 
 export function VideoModal({ vcId, onClose, videoEndTime }: VideoModalProps) {
@@ -29,7 +28,7 @@ export function VideoModal({ vcId, onClose, videoEndTime }: VideoModalProps) {
   const [vdoReady, setVdoReady] = useState(false);
 
   const embedBoxRef = useRef<HTMLDivElement>(null);
-  const videoIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const videoIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Load vdo.js script
   useEffect(() => {
@@ -184,7 +183,7 @@ export function VideoModal({ vcId, onClose, videoEndTime }: VideoModalProps) {
                   video.statusText &&
                   video.statusText !== "loading"
                 ) {
-                  if (videoEndTime != null && videoEndTime !== "") {
+                  if (videoEndTime != null) {
                     let seekPosition = parseInt(videoEndTime.toString());
                     if (seekPosition >= 10) {
                       seekPosition = seekPosition - 10;

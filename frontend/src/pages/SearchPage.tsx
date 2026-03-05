@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { AlertCircle, Play, Pause } from "lucide-react";
 import { motion } from "framer-motion";
-import gsap from "gsap";
 import { SearchBar } from "../components/SearchBar";
 import { ResultCard } from "../components/ResultCard";
 import { VideoModal } from "../components/VideoModal";
