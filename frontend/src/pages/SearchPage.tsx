@@ -160,7 +160,7 @@ export function SearchPage() {
                         transition={{ duration: 0.5 }}
                     >
                         <AlertCircle size={16} />
-                        Backend not reachable. Start uvicorn on port 8000.
+                        Backend not reachable. The API server may be unavailable.
                     </motion.div>
                 )}
                 <SearchBar onSearch={handleSearch} isLoading={status === "loading"} />
